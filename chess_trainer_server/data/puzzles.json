@@ -1,0 +1,73 @@
+[
+  {
+    "id": "puzzle-001",
+    "fen": "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
+    "solution": ["e2e4"],
+    "description": "Open with the king's pawn.",
+    "difficulty": "easy"
+  },
+  {
+    "id": "puzzle-002",
+    "fen": "rnbqkbnr/pppp1ppp/8/4p3/4P3/8/PPPP1PPP/RNBQKBNR w KQkq - 0 2",
+    "solution": ["g1f3"],
+    "description": "Develop a knight to attack the center.",
+    "difficulty": "easy"
+  },
+  {
+    "id": "puzzle-003",
+    "fen": "6k1/8/8/8/8/8/5K2/6R1 w - - 0 1",
+    "solution": ["g1g8"],
+    "description": "Deliver a simple rook mate.",
+    "difficulty": "easy"
+  },
+  {
+    "id": "puzzle-004",
+    "fen": "7k/8/8/8/8/8/5K2/6Q1 w - - 0 1",
+    "solution": ["g1g8"],
+    "description": "Find the forcing queen move.",
+    "difficulty": "easy"
+  },
+  {
+    "id": "puzzle-005",
+    "fen": "8/8/8/8/8/2k5/8/2K5 w - - 0 1",
+    "solution": ["c1d1"],
+    "description": "Improve your king activity.",
+    "difficulty": "easy"
+  },
+  {
+    "id": "puzzle-006",
+    "fen": "4k3/8/8/3Q4/8/8/4K3/8 w - - 0 1",
+    "solution": ["d5e5"],
+    "description": "Centralize the queen with tempo.",
+    "difficulty": "easy"
+  },
+  {
+    "id": "puzzle-007",
+    "fen": "r1bqkbnr/pppp1ppp/2n5/4p3/4P3/5N2/PPPP1PPP/RNBQKB1R w KQkq - 2 3",
+    "solution": ["f1b5"],
+    "description": "Develop with pressure on c6.",
+    "difficulty": "medium"
+  },
+  {
+    "id": "puzzle-008",
+    "fen": "rnbqk2r/pppp1ppp/5n2/4p3/3PP3/5N2/PPP2PPP/RNBQKB1R w KQkq - 2 3",
+    "solution": ["d4e5"],
+    "description": "Capture the central pawn.",
+    "difficulty": "medium"
+  },
+  {
+    "id": "puzzle-009",
+    "fen": "4k3/8/8/8/8/3R4/4K3/8 w - - 0 1",
+    "solution": ["d3d8"],
+    "description": "Use the rook to give check.",
+    "difficulty": "medium"
+  },
+  {
+    "id": "puzzle-010",
+    "fen": "8/8/3k4/8/8/3B4/4K3/8 w - - 0 1",
+    "solution": ["d3f5"],
+    "description": "Activate the bishop toward the king.",
+    "difficulty": "hard"
+  }
+]
+

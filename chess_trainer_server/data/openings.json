@@ -1,0 +1,33 @@
+[
+  {
+    "id": "opening-001",
+    "name": "Ruy Lopez",
+    "moves": ["e2e4", "e7e5", "g1f3", "b8c6", "f1b5"],
+    "description": "Classical development targeting the e5 pawn."
+  },
+  {
+    "id": "opening-002",
+    "name": "Sicilian Defense",
+    "moves": ["e2e4", "c7c5", "g1f3"],
+    "description": "Asymmetrical response to 1.e4."
+  },
+  {
+    "id": "opening-003",
+    "name": "Queen's Gambit",
+    "moves": ["d2d4", "d7d5", "c2c4"],
+    "description": "White offers a pawn to seize central space."
+  },
+  {
+    "id": "opening-004",
+    "name": "King's Indian Defense",
+    "moves": ["d2d4", "g8f6", "c2c4", "g7g6"],
+    "description": "Flexible setup aiming for kingside counterplay."
+  },
+  {
+    "id": "opening-005",
+    "name": "French Defense",
+    "moves": ["e2e4", "e7e6", "d2d4", "d7d5"],
+    "description": "Solid structure with counterplay in the center."
+  }
+]
+
