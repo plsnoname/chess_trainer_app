@@ -13,22 +13,25 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/menu_title"
-        android:textSize="22sp"
-        android:textStyle="bold" />
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:textColor="@color/text_primary" />
 
     <TextView
         android:id="@+id/menu_subtitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="@string/menu_subtitle" />
+        android:text="@string/menu_subtitle"
+        android:textColor="@color/text_primary" />
 
     <TextView
         android:id="@+id/menu_last_saved"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
-        android:text="@string/menu_last_saved_empty" />
+        android:text="@string/menu_last_saved_empty"
+        android:textColor="@color/text_primary" />
 
     <Button
         android:id="@+id/button_play_player"

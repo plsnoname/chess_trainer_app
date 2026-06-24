@@ -15,11 +15,6 @@
         android:usesCleartextTraffic="true"
         android:theme="@style/Theme.Chess_trainer_client" >
         <activity
-            android:name=".ui.ChessBoardTestActivity"
-            android:exported="false"
-            android:label="@string/game"
-            android:theme="@style/Theme.Chess_trainer_client" />
-        <activity
             android:name=".MainActivity"
             android:exported="true"
             android:label="@string/app_name"
