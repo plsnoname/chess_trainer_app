@@ -21,16 +21,29 @@ class UserSessionDatabase(context: Context) : SQLiteOpenHelper(
                 )
             """.trimIndent()
         )
+        db.execSQL(
+            """
+                CREATE TABLE IF NOT EXISTS ${SavedGameStore.TABLE_NAME} (
+                    ${SavedGameStore.COLUMN_ID} INTEGER PRIMARY KEY AUTOINCREMENT,
+                    ${SavedGameStore.COLUMN_NAME} TEXT,
+                    ${SavedGameStore.COLUMN_FEN} TEXT NOT NULL,
+                    ${SavedGameStore.COLUMN_ACTIVE_COLOR} TEXT NOT NULL,
+                    ${SavedGameStore.COLUMN_MODE} TEXT NOT NULL,
+                    ${SavedGameStore.COLUMN_TIMESTAMP} INTEGER NOT NULL
+                )
+            """.trimIndent()
+        )
     }
 
     override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
         db.execSQL("DROP TABLE IF EXISTS ${UserSessionStore.TABLE_NAME}")
+        db.execSQL("DROP TABLE IF EXISTS ${SavedGameStore.TABLE_NAME}")
         onCreate(db)
     }
 
     private companion object {
         const val DATABASE_NAME = "chess_trainer.db"
-        const val DATABASE_VERSION = 1
+        const val DATABASE_VERSION = 3
     }
 }
 

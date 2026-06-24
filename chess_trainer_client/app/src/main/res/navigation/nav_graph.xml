@@ -25,23 +25,17 @@
             app:popUpTo="@id/menuFragment"
             app:popUpToInclusive="true" />
         <action
-            android:id="@+id/action_menuFragment_to_homeFragment"
-            app:destination="@id/homeFragment" />
-    </fragment>
-
-    <fragment
-        android:id="@+id/homeFragment"
-        android:name="com.example.chess_trainer_client.ui.HomeFragment"
-        android:label="@string/home">
-        <action
-            android:id="@+id/action_homeFragment_to_gameFragment"
+            android:id="@+id/action_menuFragment_to_gameFragment"
             app:destination="@id/gameFragment" />
         <action
-            android:id="@+id/action_homeFragment_to_puzzleFragment"
+            android:id="@+id/action_menuFragment_to_puzzleFragment"
             app:destination="@id/puzzleFragment" />
         <action
-            android:id="@+id/action_homeFragment_to_openingsFragment"
+            android:id="@+id/action_menuFragment_to_openingsFragment"
             app:destination="@id/openingsFragment" />
+        <action
+            android:id="@+id/action_menuFragment_to_savedGamesFragment"
+            app:destination="@id/savedGamesFragment" />
     </fragment>
 
     <fragment
@@ -52,10 +46,26 @@
             android:name="mode"
             app:argType="string"
             android:defaultValue="two_player" />
+        <argument
+            android:name="saved_game_id"
+            app:argType="long"
+            android:defaultValue="-1L" />
+        <argument
+            android:name="saved_game_fen"
+            app:argType="string"
+            android:defaultValue="" />
+        <argument
+            android:name="saved_game_color"
+            app:argType="string"
+            android:defaultValue="WHITE" />
+        <argument
+            android:name="saved_game_mode"
+            app:argType="string"
+            android:defaultValue="two_player" />
         <action
             android:id="@+id/action_gameFragment_to_menuFragment"
             app:destination="@id/menuFragment"
-            app:popUpTo="@id/homeFragment"
+            app:popUpTo="@id/menuFragment"
             app:popUpToInclusive="false" />
     </fragment>
 
@@ -66,7 +76,7 @@
         <action
             android:id="@+id/action_puzzleFragment_to_menuFragment"
             app:destination="@id/menuFragment"
-            app:popUpTo="@id/homeFragment"
+            app:popUpTo="@id/menuFragment"
             app:popUpToInclusive="false" />
     </fragment>
 
@@ -77,8 +87,22 @@
         <action
             android:id="@+id/action_openingsFragment_to_menuFragment"
             app:destination="@id/menuFragment"
-            app:popUpTo="@id/homeFragment"
+            app:popUpTo="@id/menuFragment"
             app:popUpToInclusive="false" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/savedGamesFragment"
+        android:name="com.example.chess_trainer_client.ui.SavedGamesFragment"
+        android:label="@string/saved_games">
+        <action
+            android:id="@+id/action_savedGamesFragment_to_menuFragment"
+            app:destination="@id/menuFragment"
+            app:popUpTo="@id/menuFragment"
+            app:popUpToInclusive="false" />
+        <action
+            android:id="@+id/action_savedGamesFragment_to_gameFragment"
+            app:destination="@id/gameFragment" />
     </fragment>
 </navigation>
 

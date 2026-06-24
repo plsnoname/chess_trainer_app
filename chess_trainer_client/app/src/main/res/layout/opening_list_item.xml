@@ -5,5 +5,8 @@
     android:layout_height="match_parent"
     android:gravity="center_vertical"
     android:paddingHorizontal="16dp"
-    android:textAppearance="?android:attr/textAppearanceMedium" />
-
+    android:paddingVertical="8dp"
+    android:background="@drawable/bg_opening_item"
+    android:textAppearance="?android:attr/textAppearanceMedium"
+    android:textColor="@color/text_primary"
+    android:layout_margin="4dp" />

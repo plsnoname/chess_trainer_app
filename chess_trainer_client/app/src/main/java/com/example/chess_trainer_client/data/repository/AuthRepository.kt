@@ -49,6 +49,14 @@ class AuthRepository(
     private suspend fun <T> safeCall(block: suspend () -> T): Result<T> {
         return try {
             Result.success(block())
+        } catch (exception: retrofit2.HttpException) {
+            val errorBody = exception.response()?.errorBody()?.string()
+            val errorMessage = try {
+                org.json.JSONObject(errorBody ?: "").getString("error")
+            } catch (e: Exception) {
+                exception.message() ?: "Unknown error"
+            }
+            Result.failure(Exception(errorMessage))
         } catch (exception: Exception) {
             Result.failure(exception)
         }

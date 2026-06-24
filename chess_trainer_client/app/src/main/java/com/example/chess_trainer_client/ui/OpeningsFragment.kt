@@ -62,6 +62,14 @@ class OpeningsFragment : Fragment(R.layout.fragment_openings) {
             val total = opening?.moves?.size ?: 0
             val index = viewModel.moveIndex.value ?: 0
             moveCounter.text = getString(R.string.move_counter, index, total)
+            
+            // Update selected position in adapter
+            if (opening != null) {
+                val position = adapter.items.indexOfFirst { it.id == opening.id }
+                if (position >= 0) {
+                    adapter.setSelectedPosition(position)
+                }
+            }
         }
         viewModel.board.observe(viewLifecycleOwner) { board ->
             boardView.setBoard(board)

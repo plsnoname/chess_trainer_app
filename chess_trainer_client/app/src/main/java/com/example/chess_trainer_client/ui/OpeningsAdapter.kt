@@ -12,12 +12,22 @@ class OpeningsAdapter(
     private val onClick: (Opening) -> Unit
 ) : RecyclerView.Adapter<OpeningsAdapter.OpeningViewHolder>() {
 
-    private val items = mutableListOf<Opening>()
+    private val _items = mutableListOf<Opening>()
+    val items: List<Opening> get() = _items
+    private var selectedPosition: Int = -1
 
     fun submitList(openings: List<Opening>) {
-        items.clear()
-        items.addAll(openings)
+        _items.clear()
+        _items.addAll(openings)
+        selectedPosition = -1
         notifyDataSetChanged()
+    }
+
+    fun setSelectedPosition(position: Int) {
+        val oldPosition = selectedPosition
+        selectedPosition = position
+        if (oldPosition >= 0) notifyItemChanged(oldPosition)
+        if (position >= 0) notifyItemChanged(position)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): OpeningViewHolder {
@@ -27,10 +37,10 @@ class OpeningsAdapter(
     }
 
     override fun onBindViewHolder(holder: OpeningViewHolder, position: Int) {
-        holder.bind(items[position])
+        holder.bind(_items[position], position == selectedPosition)
     }
 
-    override fun getItemCount(): Int = items.size
+    override fun getItemCount(): Int = _items.size
 
     class OpeningViewHolder(
         itemView: View,
@@ -45,9 +55,10 @@ class OpeningsAdapter(
             }
         }
 
-        fun bind(opening: Opening) {
+        fun bind(opening: Opening, isSelected: Boolean) {
             current = opening
             nameView.text = opening.name
+            nameView.isSelected = isSelected
         }
     }
 }

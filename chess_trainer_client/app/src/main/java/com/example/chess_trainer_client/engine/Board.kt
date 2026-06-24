@@ -65,7 +65,8 @@ class Board {
         castlingRights = CastlingRights()
         enPassantTarget = null
 
-        val placement = fen.trim().split(" ")[0]
+        val parts = fen.trim().split(Regex("\\s+"))
+        val placement = parts[0]
         val ranks = placement.split("/")
         require(ranks.size == 8) { "FEN must have 8 ranks" }
 
@@ -95,6 +96,59 @@ class Board {
                 }
             }
             require(file == 8) { "Invalid FEN rank width" }
+        }
+
+        if (parts.size >= 3) {
+            castlingRights = parseCastlingRights(parts[2])
+        }
+        if (parts.size >= 4) {
+            enPassantTarget = if (parts[3] == "-") null else Square.fromAlgebraic(parts[3])
+        }
+    }
+
+    fun toFenPlacement(): String {
+        val ranks = mutableListOf<String>()
+        for (rank in 7 downTo 0) {
+            var emptyCount = 0
+            val builder = StringBuilder()
+            for (file in 0..7) {
+                val piece = getPiece(Square(file, rank))
+                if (piece == null) {
+                    emptyCount += 1
+                } else {
+                    if (emptyCount > 0) {
+                        builder.append(emptyCount)
+                        emptyCount = 0
+                    }
+                    builder.append(pieceSymbol(piece))
+                }
+            }
+            if (emptyCount > 0) {
+                builder.append(emptyCount)
+            }
+            ranks.add(builder.toString())
+        }
+        return ranks.joinToString("/")
+    }
+
+    private fun parseCastlingRights(value: String): CastlingRights {
+        if (value == "-") return CastlingRights()
+        return CastlingRights(
+            whiteKingSide = value.contains('K'),
+            whiteQueenSide = value.contains('Q'),
+            blackKingSide = value.contains('k'),
+            blackQueenSide = value.contains('q')
+        )
+    }
+
+    private fun pieceSymbol(piece: Piece): Char {
+        return when (piece.type) {
+            PieceType.KING -> if (piece.color == PieceColor.WHITE) 'K' else 'k'
+            PieceType.QUEEN -> if (piece.color == PieceColor.WHITE) 'Q' else 'q'
+            PieceType.ROOK -> if (piece.color == PieceColor.WHITE) 'R' else 'r'
+            PieceType.BISHOP -> if (piece.color == PieceColor.WHITE) 'B' else 'b'
+            PieceType.KNIGHT -> if (piece.color == PieceColor.WHITE) 'N' else 'n'
+            PieceType.PAWN -> if (piece.color == PieceColor.WHITE) 'P' else 'p'
         }
     }
 

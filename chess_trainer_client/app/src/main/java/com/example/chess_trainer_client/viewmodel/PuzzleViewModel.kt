@@ -25,10 +25,10 @@ sealed class PuzzleResult {
 }
 
 class PuzzleViewModel(
-    application: Application,
-    private val repository: ChessRepository = ChessRepository()
+    application: Application
 ) : AndroidViewModel(application) {
     private val gameState = GameState()
+    private val repository = ChessRepository()
     private val puzzles = mutableListOf<Puzzle>()
     private var currentIndex = 0
     private var solutionIndex = 0
@@ -174,4 +174,3 @@ class PuzzleViewModel(
     }
 
 }
-

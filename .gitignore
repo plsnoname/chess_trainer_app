@@ -46,6 +46,6 @@ local.properties
 *.jks
 
 # Ignore markdown except README files
-*.md
+
 !README.md
 !**/README.md

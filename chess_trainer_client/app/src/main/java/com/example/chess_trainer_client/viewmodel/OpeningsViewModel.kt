@@ -29,10 +29,10 @@ sealed class TrainingResult {
 }
 
 class OpeningsViewModel(
-    application: Application,
-    private val repository: ChessRepository = ChessRepository()
+    application: Application
 ) : AndroidViewModel(application) {
     private val gameState = GameState()
+    private val repository = ChessRepository()
     private val openings = mutableListOf<Opening>()
 
     private val _openings = MutableLiveData<List<Opening>>(emptyList())

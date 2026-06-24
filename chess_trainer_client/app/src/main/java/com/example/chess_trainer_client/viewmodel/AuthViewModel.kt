@@ -36,6 +36,20 @@ class AuthViewModel(application: Application) : AndroidViewModel(application) {
 
     fun isLoggedInSync(): Boolean = sessionManager.isLoggedIn()
 
+    fun checkSession() {
+        val token = sessionManager.getToken()
+        if (token == null) {
+            clearSession()
+            return
+        }
+        viewModelScope.launch {
+            val result = repository.me(token)
+            if (result.isFailure) {
+                clearSession()
+            }
+        }
+    }
+
     fun clearSession() {
         sessionManager.clearSession()
         _isLoggedIn.value = false

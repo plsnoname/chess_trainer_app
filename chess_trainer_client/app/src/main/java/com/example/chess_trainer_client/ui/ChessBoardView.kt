@@ -5,9 +5,11 @@ import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.RectF
+import android.graphics.drawable.Drawable
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
+import androidx.core.content.ContextCompat
 import com.example.chess_trainer_client.engine.Board
 import com.example.chess_trainer_client.engine.Piece
 import com.example.chess_trainer_client.engine.PieceColor
@@ -40,6 +42,8 @@ class ChessBoardView @JvmOverloads constructor(
     private var highlightedSquares: Set<Square> = emptySet()
     private var selectedSquare: Square? = null
     private var listener: OnSquareTappedListener? = null
+    
+    private val pieceDrawables = mutableMapOf<String, Drawable?>()
 
     fun setBoard(board: Board) {
         this.board = board
@@ -113,12 +117,41 @@ class ChessBoardView @JvmOverloads constructor(
 
     private fun drawPiece(canvas: Canvas, piece: Piece, file: Int, row: Int) {
         val rect = squareRect(file, row)
-        val symbol = pieceSymbol(piece)
-        piecePaint.color = if (piece.color == PieceColor.WHITE) Color.WHITE else Color.BLACK
-        piecePaint.textSize = squareSize * 0.7f
-        val textX = rect.centerX()
-        val textY = rect.centerY() - (piecePaint.descent() + piecePaint.ascent()) / 2
-        canvas.drawText(symbol, textX, textY, piecePaint)
+        val drawable = getPieceDrawable(piece)
+        
+        if (drawable != null) {
+            val padding = squareSize * 0.1f
+            drawable.setBounds(
+                (rect.left + padding).toInt(),
+                (rect.top + padding).toInt(),
+                (rect.right - padding).toInt(),
+                (rect.bottom - padding).toInt()
+            )
+            drawable.draw(canvas)
+        } else {
+            // Fallback to text if PNGs not added yet
+            val symbol = pieceSymbol(piece)
+            piecePaint.color = if (piece.color == PieceColor.WHITE) Color.WHITE else Color.BLACK
+            piecePaint.textSize = squareSize * 0.7f
+            val textX = rect.centerX()
+            val textY = rect.centerY() - (piecePaint.descent() + piecePaint.ascent()) / 2
+            canvas.drawText(symbol, textX, textY, piecePaint)
+        }
+    }
+
+    private fun getPieceDrawable(piece: Piece): Drawable? {
+        val colorPrefix = if (piece.color == PieceColor.WHITE) "w" else "b"
+        val typeSuffix = piece.type.name.lowercase()
+        val resName = "ic_chess_${colorPrefix}_${typeSuffix}"
+        
+        if (pieceDrawables.containsKey(resName)) {
+            return pieceDrawables[resName]
+        }
+        
+        val resId = context.resources.getIdentifier(resName, "drawable", context.packageName)
+        val drawable = if (resId != 0) ContextCompat.getDrawable(context, resId) else null
+        pieceDrawables[resName] = drawable
+        return drawable
     }
 
     private fun pieceSymbol(piece: Piece): String {

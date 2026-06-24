@@ -20,7 +20,7 @@ class AuthFragment : Fragment(R.layout.fragment_auth) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        if (viewModel.isLoggedIn()) {
+        if (viewModel.isLoggedInSync()) {
             navigateToMenu()
             return
         }
@@ -41,7 +41,7 @@ class AuthFragment : Fragment(R.layout.fragment_auth) {
                 errorText.visibility = View.VISIBLE
                 return
             }
-            if (password.length < 6) {
+            if (password.length < 8) {
                 errorText.text = getString(R.string.auth_error_invalid_password)
                 errorText.visibility = View.VISIBLE
                 return

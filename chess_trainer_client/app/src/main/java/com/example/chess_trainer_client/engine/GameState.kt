@@ -20,7 +20,7 @@ class GameState {
         board.initializeStartingPosition()
     }
 
-    fun applyMove(from: Square, to: Square): MoveResult {
+    fun applyMove(from: Square, to: Square, promotion: PieceType? = null): MoveResult {
         val piece = board.getPiece(from) ?: return MoveResult.IllegalMove
         if (piece.color != activeColor) {
             return MoveResult.IllegalMove
@@ -30,7 +30,7 @@ class GameState {
             return MoveResult.IllegalMove
         }
 
-        val move = buildMove(from, to, piece)
+        val move = buildMove(from, to, piece, promotion)
         val record = applyMoveInternal(move)
         moveHistory.addLast(record)
 
@@ -55,6 +55,25 @@ class GameState {
         moveHistory.clear()
     }
 
+    fun loadFromFen(fen: String) {
+        board.loadFromFen(fen)
+        activeColor = parseActiveColor(fen)
+        moveHistory.clear()
+    }
+
+    fun toFen(): String {
+        val active = if (activeColor == PieceColor.WHITE) "w" else "b"
+        val castling = castlingRightsToFen(board.castlingRights)
+        val enPassant = board.enPassantTarget?.toAlgebraic() ?: "-"
+        return "${board.toFenPlacement()} $active $castling $enPassant 0 1"
+    }
+
+    fun toSnapshot(): GameStateSnapshot = GameStateSnapshot(toFen())
+
+    fun loadFromSnapshot(snapshot: GameStateSnapshot) {
+        loadFromFen(snapshot.fen)
+    }
+
     fun undoLastMove(): Boolean {
         if (moveHistory.isEmpty()) {
             return false
@@ -64,13 +83,13 @@ class GameState {
         return true
     }
 
-    private fun buildMove(from: Square, to: Square, piece: Piece): Move {
+    private fun buildMove(from: Square, to: Square, piece: Piece, promotionOverride: PieceType?): Move {
         val isCastling = piece.type == PieceType.KING && abs(to.file - from.file) == 2
         val isEnPassant = piece.type == PieceType.PAWN && board.enPassantTarget == to && board.getPiece(to) == null
         val capturedSquare = if (isEnPassant) Square(to.file, from.rank) else to
         val capturedPiece = board.getPiece(capturedSquare)
         val promotion = if (piece.type == PieceType.PAWN && (to.rank == 0 || to.rank == 7)) {
-            PieceType.QUEEN
+            promotionOverride ?: PieceType.QUEEN
         } else {
             null
         }
@@ -177,6 +196,23 @@ class GameState {
             board.setPiece(record.capturedSquare, record.capturedPiece)
         }
     }
+}
+
+data class GameStateSnapshot(val fen: String)
+
+private fun parseActiveColor(fen: String): PieceColor {
+    val parts = fen.trim().split(Regex("\\s+"))
+    val colorPart = parts.getOrNull(1) ?: "w"
+    return if (colorPart.lowercase() == "b") PieceColor.BLACK else PieceColor.WHITE
+}
+
+private fun castlingRightsToFen(rights: CastlingRights): String {
+    val builder = StringBuilder()
+    if (rights.whiteKingSide) builder.append('K')
+    if (rights.whiteQueenSide) builder.append('Q')
+    if (rights.blackKingSide) builder.append('k')
+    if (rights.blackQueenSide) builder.append('q')
+    return if (builder.isEmpty()) "-" else builder.toString()
 }
 
 private data class MoveRecord(

@@ -21,6 +21,13 @@ class MainActivity : FragmentActivity() {
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         navController = navHostFragment.navController
 
+        authViewModel.checkSession()
+        authViewModel.isLoggedIn.observe(this) { loggedIn ->
+            if (!loggedIn && navController.currentDestination?.id != R.id.authFragment) {
+                navController.navigate(R.id.authFragment)
+            }
+        }
+
         setupNavigationGuard()
     }
 
@@ -28,10 +35,11 @@ class MainActivity : FragmentActivity() {
         navController.addOnDestinationChangedListener { _, destination, _ ->
             // Check if trying to navigate to a protected screen while logged out
             val protectedScreenIds = setOf(
-                R.id.homeFragment,
+                R.id.menuFragment,
                 R.id.gameFragment,
                 R.id.puzzleFragment,
-                R.id.openingsFragment
+                R.id.openingsFragment,
+                R.id.savedGamesFragment
             )
 
             if (destination.id in protectedScreenIds && !authViewModel.isLoggedInSync()) {

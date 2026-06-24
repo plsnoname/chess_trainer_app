@@ -3,7 +3,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="16dp">
+    android:paddingStart="16dp"
+    android:paddingTop="32dp"
+    android:paddingEnd="16dp"
+    android:paddingBottom="36dp">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/openings_list"
@@ -51,7 +54,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
-        android:textColor="@android:color/holo_red_dark"
+        android:textColor="@color/error"
         android:visibility="gone" />
 
     <ToggleButton
@@ -59,6 +62,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
+        android:background="@drawable/bg_round_toggle"
+        android:minHeight="48dp"
+        android:paddingStart="20dp"
+        android:paddingTop="12dp"
+        android:paddingEnd="20dp"
+        android:paddingBottom="12dp"
+        android:textColor="@color/text_primary"
         android:textOn="@string/training_mode"
         android:textOff="@string/study_mode" />
 

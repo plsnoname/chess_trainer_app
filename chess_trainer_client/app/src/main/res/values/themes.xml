@@ -1,4 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="Theme.Chess_trainer_client" parent="android:Theme.Material.Light.NoActionBar" />
+    <style name="Theme.Chess_trainer_client" parent="Theme.AppCompat.NoActionBar">
+        <item name="colorPrimary">@color/button_primary</item>
+        <item name="colorPrimaryDark">@color/background_dark</item>
+        <item name="colorAccent">@color/button_primary</item>
+        <item name="android:colorBackground">@color/background_dark</item>
+        <item name="android:windowBackground">@color/background_dark</item>
+        <item name="android:textColorPrimary">@color/text_primary</item>
+        <item name="android:textColorSecondary">@color/text_secondary</item>
+        <item name="android:navigationBarColor">@color/background_dark</item>
+        <item name="buttonStyle">@style/Widget.ChessTrainer.Button</item>
+        <item name="android:buttonStyle">@style/Widget.ChessTrainer.Button</item>
+        <item name="editTextStyle">@style/Widget.ChessTrainer.EditText</item>
+    </style>
+    
+    <style name="Widget.ChessTrainer.EditText" parent="android:Widget.EditText">
+        <item name="android:textColor">@color/text_primary</item>
+        <item name="android:textColorHint">@color/text_secondary</item>
+        <item name="android:backgroundTint">@color/card_surface</item>
+    </style>
 </resources>
